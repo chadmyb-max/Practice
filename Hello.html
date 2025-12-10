@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GPE & EPE Revision Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f7fb;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #1f4f7b;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 0.95rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto 40px;
+      padding: 0 15px;
+    }
+
+    .scoreboard {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      border-radius: 12px;
+      padding: 15px 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .scoreboard h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .scoreboard span {
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    .scoreboard button {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: #e74c3c;
+      color: white;
+      font-weight: bold;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px 18px 18px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #1f4f7b;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .question-text {
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    .options {
+      margin-top: 6px;
+    }
+
+    .options label {
+      display: block;
+      margin-bottom: 4px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    .btn-check {
+      margin-top: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: #1abc9c;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .feedback {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      min-height: 18px;
+    }
+
+    .feedback.correct {
+      color: #27ae60;
+      font-weight: bold;
+    }
+
+    .feedback.incorrect {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #eef3ff;
+      color: #1f4f7b;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 25px;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 4px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gravitational & Elastic Potential Energy – Revision Game</h1>
+    <p>Answer questions, earn points, and review key concepts of GPE & EPE.</p>
+  </header>
+
+  <div class="container">
+    <div class="scoreboard">
+      <div>
+        <h2>Your Score: <span id="score">0</span> points</h2>
+        <p>Try to answer correctly on the first attempt to maximise your points.</p>
+      </div>
+      <button onclick="resetGame()">Reset Game</button>
+    </div>
+
+    <div class="grid">
+      <!-- Q1: Concept – Definition of GPE -->
+      <div class="card" id="q1" data-answered="false" data-points="10">
+        <div class="tag">Concept • GPE</div>
+        <h3>Q1. What is Gravitational Potential Energy?</h3>
+        <p class="question-text">
+          Choose the best definition:
+        </p>
+        <div class="options">
+          <label>
+            <input type="radio" name="q1_options" value="a" />
+            A) Energy stored because a spring is stretched or compressed.
+          </label>
+          <label>
+            <input type="radio" name="q1_options" value="b" />
+            B) Energy of motion of an object.
+          </label>
+          <label>
+            <input type="radio" name="q1_options" value="c" />
+            C) Stored energy an object has because of its position in a gravitational field.
+          </label>
+          <label>
+            <input type="radio" name="q1_options" value="d" />
+            D) Energy released during a chemical reaction.
+          </label>
+        </div>
+        <button class="btn-check" onclick="checkMCQ('q1', 'q1_options', 'c')">Check Answer</button>
+        <div class="feedback" id="q1_feedback"></div>
+      </div>
+
+      <!-- Q2: Formula Ep = mgh -->
+      <div class="card" id="q2" data-answered="false" data-points="10">
+        <div class="tag">Formula • GPE</div>
+        <h3>Q2. GPE Formula</h3>
+        <p class="question-text">
+          Fill in the missing formula for gravitational potential energy near the Earth's surface:
+        </p>
+        <p>Ep = <input type="text" id="q2_input" placeholder="e.g. mgh" /></p>
+        <p class="hint">Use the symbols m, g, and h.</p>
+        <button class="btn-check" onclick="checkText('q2', 'q2_input', ['mgh', 'm g h'])">
+          Check Answer
+        </button>
+        <div class="feedback" id="q2_feedback"></div>
+      </div>
+
+      <!-- Q3: Only vertical height matters -->
+      <div class="card" id="q3" data-answered="false" data-points="10">
+        <div class="tag">Concept • Height</div>
+        <h3>Q3. Height in GPE</h3>
+        <p class="question-text">
+          When calculating Ep = mgh, which height matters?
+        </p>
+        <div class="options">
+          <label>
+            <input type="radio" name="q3_options" value="a" />
+            A) Total distance travelled along a slope.
+          </label>
+          <label>
+            <input type="radio" name="q3_options" value="b" />
+            B) Horizontal distance travelled.
+          </label>
+          <label>
+            <input type="radio" name="q3_options" value="c" />
+            C) Vertical height above a reference point.
+          </label>
+          <label>
+            <input type="radio" name="q3_options" value="d" />
+            D) The radius of the Earth.
+          </label>
+        </div>
+        <button class="btn-check" onclick="checkMCQ('q3', 'q3_options', 'c')">Check Answer</button>
+        <div class="feedback" id="q3_feedback"></div>
+      </div>
+
+      <!-- Q4: Calculation – 200 kg lifted 1.5 m -->
+      <div class="card" id="q4" data-answered="false" data-points="15">
+        <div class="tag">Calculation • GPE</div>
+        <h3>Q4. Lifting a Weight</h3>
+        <p class="question-text">
+          A 200 kg weight is lifted vertically through 1.5 m. Take g = 9.8 N/kg.<br />
+          Calculate the increase in gravitational potential energy (in joules).
+        </p>
+        <input type="number" id="q4_input" placeholder="Enter Ep in J" />
+        <p class="hint">Use Ep = mgh.</p>
+        <button class="btn-check" onclick="checkNumeric('q4', 'q4_input', 2940, 20)">
+          Check Answer
+        </button>
+        <div class="feedback" id="q4_feedback"></div>
+      </div>
+
+      <!-- Q5: Energy conversion when falling -->
+      <div class="card" id="q5" data-answered="false" data-points="10">
+        <div class="tag">Concept • Energy Transfer</div>
+        <h3>Q5. Falling Object</h3>
+        <p class="question-text">
+          When an object falls freely (ignoring air resistance), its lost gravitational potential energy
+          changes into:
+        </p>
+        <div class="options">
+          <label>
+            <input type="radio" name="q5_options" value="a" />
+            A) Elastic potential energy.
+          </label>
+          <label>
+            <input type="radio" name="q5_options" value="b" />
+            B) Kinetic energy.
+          </label>
+          <label>
+            <input type="radio" name="q5_options" value="c" />
+            C) Light energy.
+          </label>
+          <label>
+            <input type="radio" name="q5_options" value="d" />
+            D) Nuclear energy.
+          </label>
+        </div>
+        <button class="btn-check" onclick="checkMCQ('q5', 'q5_options', 'b')">Check Answer</button>
+        <div class="feedback" id="q5_feedback"></div>
+      </div>
+
+      <!-- Q6: 1.2 kg at 4 m -->
+      <div class="card" id="q6" data-answered="false" data-points="15">
+        <div class="tag">Calculation • GPE</div>
+        <h3>Q6. Object Above Ground</h3>
+        <p class="question-text">
+          An object has mass 1.2 kg and is 4.0 m above the ground. Take g = 9.8 N/kg.<br />
+          a) Calculate its gravitational potential energy (in joules).
+        </p>
+        <input type="number" id="q6_input" placeholder="Enter Ep in J" />
+        <p class="hint">Ep = mgh</p>
+        <button class="btn-check" onclick="checkNumeric('q6', 'q6_input', 47.04, 1)">
+          Check Answer
+        </button>
+        <div class="feedback" id="q6_feedback"></div>
+      </div>
+
+      <!-- Q7: EPE concept -->
+      <div class="card" id="q7" data-answered="false" data-points="10">
+        <div class="tag">Concept • EPE</div>
+        <h3>Q7. Elastic Potential Energy</h3>
+        <p class="question-text">
+          Elastic potential energy is the energy stored:
+        </p>
+        <div class="options">
+          <label>
+            <input type="radio" name="q7_options" value="a" />
+            A) In an object because of its height above the ground.
+          </label>
+          <label>
+            <input type="radio" name="q7_options" value="b" />
+            B) In a moving object due to its speed.
+          </label>
+          <label>
+            <input type="radio" name="q7_options" value="c" />
+            C) In a spring or elastic material when it is stretched or compressed.
+          </label>
+          <label>
+            <input type="radio" name="q7_options" value="d" />
+            D) In a battery due to chemical reactions.
+          </label>
+        </div>
+        <button class="btn-check" onclick="checkMCQ('q7', 'q7_options', 'c')">Check Answer</button>
+        <div class="feedback" id="q7_feedback"></div>
+      </div>
+
+      <!-- Q8: EPE formula -->
+      <div class="card" id="q8" data-answered="false" data-points="10">
+        <div class="tag">Formula • EPE</div>
+        <h3>Q8. EPE Formula</h3>
+        <p class="question-text">
+          Fill in the standard formula for the elastic potential energy stored in a spring:
+        </p>
+        <p>E<sub>elastic</sub> = <input type="text" id="q8_input" placeholder="e.g. 1/2 k x^2" /></p>
+        <p class="hint">Use k for spring constant and x for extension.</p>
+        <button class="btn-check" onclick="checkText('q8', 'q8_input', ['0.5kx2','1/2kx2','0.5 k x^2','1/2 k x^2','0.5kx^2','1/2kx^2'])">
+          Check Answer
+        </button>
+        <div class="feedback" id="q8_feedback"></div>
+      </div>
+
+      <!-- Q9: EPE numeric – spring 50 N/m, 0.10 m -->
+      <div class="card" id="q9" data-answered="false" data-points="15">
+        <div class="tag">Calculation • EPE</div>
+        <h3>Q9. Stretching a Spring</h3>
+        <p class="question-text">
+          A spring with spring constant k = 50 N/m is stretched by 0.10 m.<br />
+          Calculate the elastic potential energy stored in the spring (in joules).
+        </p>
+        <input type="number" id="q9_input" placeholder="Enter E in J" />
+        <p class="hint">Use E = ½ kx².</p>
+        <button class="btn-check" onclick="checkNumeric('q9', 'q9_input', 0.25, 0.02)">
+          Check Answer
+        </button>
+        <div class="feedback" id="q9_feedback"></div>
+      </div>
+
+      <!-- Q10: Mixed GPE & EPE – launcher spring -->
+      <div class="card" id="q10" data-answered="false" data-points="20">
+        <div class="tag">Challenge • Mixed</div>
+        <h3>Q10. Spring Launcher</h3>
+        <p class="question-text">
+          A 0.20 kg ball is launched horizontally by compressing a spring by 0.10 m. The ball leaves the
+          spring with speed 3.0 m/s. Assume no friction or air resistance.<br />
+          What must the spring constant k be (in N/m)?
+        </p>
+        <input type="number" id="q10_input" placeholder="Enter k in N/m" />
+        <p class="hint">Equate ½kx² to ½mv².</p>
+        <button class="btn-check" onclick="checkNumeric('q10', 'q10_input', 180, 5)">
+          Check Answer
+        </button>
+        <div class="feedback" id="q10_feedback"></div>
+      </div>
+    </div>
+
+    <footer>
+      Try to reach the highest score you can. You can refresh or use the reset button to start again.
+    </footer>
+  </div>
+
+  <script>
+    let score = 0;
+
+    function updateScoreboard() {
+      document.getElementById('score').textContent = score;
+    }
+
+    function addPoints(cardId) {
+      const card = document.getElementById(cardId);
+      const alreadyAnswered = card.getAttribute('data-answered') === 'true';
+      if (!alreadyAnswered) {
+        const pts = parseInt(card.getAttribute('data-points'), 10) || 0;
+        score += pts;
+        card.setAttribute('data-answered', 'true');
+        updateScoreboard();
+      }
+    }
+
+    function setFeedback(cardId, isCorrect, message) {
+      const fb = document.getElementById(cardId + '_feedback');
+      fb.textContent = message;
+      fb.classList.remove('correct', 'incorrect');
+      fb.classList.add(isCorrect ? 'correct' : 'incorrect');
+    }
+
+    // Multiple choice checker
+    function checkMCQ(cardId, groupName, correctValue) {
+      const options = document.getElementsByName(groupName);
+      let selected = null;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+          selected = options[i].value;
+          break;
+        }
+      }
+
+      if (!selected) {
+        setFeedback(cardId, false, 'Please select an answer first.');
+        return;
+      }
+
+      if (selected === correctValue) {
+        setFeedback(cardId, true, 'Correct! Well done.');
+        addPoints(cardId);
+      } else {
+        setFeedback(cardId, false, 'Not quite. Check your notes and try again.');
+      }
+    }
+
+    // Short text checker (case-insensitive; matches any of allowed answers)
+    function checkText(cardId, inputId, allowedAnswers) {
+      const input = document.getElementById(inputId);
+      const raw = (input.value || '').replace(/\s+/g, '').toLowerCase();
+
+      if (!raw) {
+        setFeedback(cardId, false, 'Please type an answer first.');
+        return;
+      }
+
+      const isCorrect = allowedAnswers.some(ans => ans.replace(/\s+/g, '').toLowerCase() === raw);
+
+      if (isCorrect) {
+        setFeedback(cardId, true, 'Correct! Good job.');
+        addPoints(cardId);
+      } else {
+        setFeedback(cardId, false, 'Close, but not correct. Check your formula and try again.');
+      }
+    }
+
+    // Numeric checker with tolerance
+    function checkNumeric(cardId, inputId, correctValue, tolerance) {
+      const input = document.getElementById(inputId);
+      const val = parseFloat(input.value);
+
+      if (isNaN(val)) {
+        setFeedback(cardId, false, 'Please enter a number.');
+        return;
+      }
+
+      const diff = Math.abs(val - correctValue);
+      if (diff <= tolerance) {
+        setFeedback(
+          cardId,
+          true,
+          'Correct! Expected value ≈ ' + correctValue.toFixed(3)
+        );
+        addPoints(cardId);
+      } else {
+        setFeedback(
+          cardId,
+          false,
+          'Not quite. Your answer is off. Try recalculating carefully.'
+        );
+      }
+    }
+
+    // Reset the game
+    function resetGame() {
+      score = 0;
+      updateScoreboard();
+
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.setAttribute('data-answered', 'false');
+      });
+
+      const feedbacks = document.querySelectorAll('.feedback');
+      feedbacks.forEach(fb => {
+        fb.textContent = '';
+        fb.classList.remove('correct', 'incorrect');
+      });
+
+      const inputs = document.querySelectorAll('input[type="number"], input[type="text"]');
+      inputs.forEach(inp => {
+        inp.value = '';
+      });
+
+      const radios = document.querySelectorAll('input[type="radio"]');
+      radios.forEach(r => {
+        r.checked = false;
+      });
+    }
+  </script>
+</body>
+</html>
