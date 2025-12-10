@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Funny Hi Page</title>
+
+<style>
+    body {
+        background: #ffeecf;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        text-align: center;
+        padding-top: 80px;
+    }
+
+    h1 {
+        font-size: 60px;
+        color: #ff5733;
+        text-shadow: 3px 3px #ffd000;
+        animation: bounce 1.2s infinite;
+    }
+
+    @keyframes bounce {
+        0%   { transform: translateY(0); }
+        50%  { transform: translateY(-20px); }
+        100% { transform: translateY(0); }
+    }
+
+    #button {
+        padding: 15px 30px;
+        background: #33c1ff;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #button:hover {
+        background: #1a9bd8;
+        transform: scale(1.1);
+    }
+
+    #message {
+        font-size: 30px;
+        margin-top: 40px;
+        color: #8b008b;
+        min-height: 40px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Hi! 👋</h1>
+
+<button id="button" onclick="sayHi()">Click me for a surprise</button>
+
+<div id="message"></div>
+
+<script>
+    function sayHi() {
+        const messages = [
+            "Hi there, awesome human! 😄",
+            "Hey! I see you clicking buttons! 🤓",
+            "Hi! You're doing amazing today! 🌟",
+            "Hello! Did you drink enough water? 💧",
+            "Yo! You clicked me… bold move. 😎",
+            "Hi! You're officially cooler than 99% of HTML users. 🔥"
+        ];
+
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        document.getElementById("message").textContent = msg;
+    }
+</script>
+
+</body>
+</html>
