@@ -1,0 +1,226 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2867
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+<meta charset="UTF-8">\
+<title>Data Types & Stats Quick-Fire</title>\
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">\
+<style>\
+  :root\{\
+    --bg:#111; --accent:#00f2ff; --good:#0f0; --bad:#f33;\
+    --font:'Segoe UI',Arial,Helvetica,sans-serif;\
+  \}\
+  *\{box-sizing:border-box;\}\
+  html,body\{margin:0;height:100%;font-family:var(--font);background:var(--bg);color:#fff;overflow:hidden;\}\
+  /* Full-screen slide system */\
+  .deck\{position:relative;width:100%;height:100%;\}\
+  .slide\{\
+    position:absolute;inset:0;\
+    display:flex;flex-direction:column;align-items:center;justify-content:center;\
+    padding:3rem;text-align:center;transition:transform .4s ease;\
+    transform:translateX(100%);\
+  \}\
+  .slide.active\{transform:translateX(0);\}\
+  .slide.prev\{transform:translateX(-100%);\}\
+  h1\{font-size:clamp(2rem,5vw,3.5rem);margin:0 0 1rem;\}\
+  h2\{font-size:clamp(1.4rem,4vw,2.2rem);margin:.5em 0;\}\
+  p\{font-size:clamp(1rem,2.5vw,1.3rem);max-width:60ch;line-height:1.4;\}\
+  .btn\{\
+    margin-top:1.5rem;padding:.8rem 2rem;font-size:1.2rem;\
+    border:2px solid var(--accent);background:transparent;color:var(--accent);\
+    cursor:pointer;border-radius:4rem;transition:.25s;\
+  \}\
+  .btn:hover\{background:var(--accent);color:#000;\}\
+  /* Game widgets */\
+  .choices\{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:1.5rem;\}\
+  .choice\{\
+    padding:.8rem 1.4rem;border:2px solid #555;border-radius:.6rem;\
+    cursor:pointer;transition:.2s;font-size:1.1rem;\
+  \}\
+  .choice:hover\{border-color:var(--accent);\}\
+  .choice.correct\{border-color:var(--good);background:var(--good);color:#000;\}\
+  .choice.wrong\{border-color:var(--bad);background:var(--bad);\}\
+  .lock .choice\{cursor:not-allowed;\}\
+  input[type=number]\{font-size:1.3rem;padding:.6rem 1rem;border-radius:.5rem;border:none;width:10rem;text-align:center;\}\
+  .scoreboard\{position:fixed;top:1rem;right:1rem;background:#0008;padding:.5rem 1rem;border-radius:.5rem;font-size:1.1rem;\}\
+  .badge\{animation:boom .3s;\}\
+  @keyframes boom\{0%\{transform:scale(1.2);\}100%\{transform:scale(1);\}\}\
+  /* Progress dots */\
+  nav.dots\{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.5rem;\}\
+  .dot\{width:12px;height:12px;border-radius:50%;background:#444;cursor:pointer;\}\
+  .dot.on\{background:var(--accent);\}\
+  /* Arrow hints */\
+  .arrow\{position:fixed;top:50%;transform:translateY(-50%);font-size:3rem;cursor:pointer;user-select:none;padding:0 .5rem;\}\
+  .arrow.left\{left:.5rem;\}\
+  .arrow.right\{right:.5rem;\}\
+</style>\
+</head>\
+<body>\
+\
+<div class="scoreboard">Score&nbsp;<span id="score">0</span></div>\
+\
+<div class="deck" id="deck">\
+  <!-- 0 TITLE -->\
+  <section class="slide active">\
+    <h1>Data Types & Stats<br><span style="color:var(--accent)">Quick-Fire</span></h1>\
+    <p>30-second bursts + instant games = mastery.</p>\
+    <button class="btn" onclick="next()">Start \uc0\u9654 </button>\
+  </section>\
+\
+  <!-- 1 WARM-UP -->\
+  <section class="slide">\
+    <h2>Warm-Up: Spot the Variable</h2>\
+    <p>Shout the type for each card:</p>\
+    <ul style="text-align:left;display:inline-block;font-size:1.3rem;">\
+      <li>Favourite emoji \uc0\u55357 \u56834 </li>\
+      <li>Shoe size 8\'bd</li>\
+      <li>Temperature 21.3 \'b0C</li>\
+      <li>Letter grade A</li>\
+    </ul>\
+    <button class="btn" onclick="next()">Got it \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 2 QUAL vs QUAN -->\
+  <section class="slide">\
+    <h2>Qualitative vs Quantitative</h2>\
+    <p><strong>Rule:</strong> Words = qualitative, numbers = quantitative.</p>\
+    <div class="choices">\
+      <span class="choice" onclick="checkQQ(this,true)">Blood type AB</span>\
+      <span class="choice" onclick="checkQQ(this,false)">TikTok likes</span>\
+    </div>\
+    <p id="qqTip" style="margin-top:1rem;height:1.5rem;"></p>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 3 NOM vs ORD -->\
+  <section class="slide">\
+    <h2>Nominal vs Ordinal</h2>\
+    <p>Drag the card to the correct bucket (N or O).<br>Tap = drag on touch devices.</p>\
+    <div style="display:flex;gap:2rem;margin-top:1.5rem;">\
+      <div class="bucket" ondrop="drop(event)" ondragover="allow(event)" data-ans="N"><strong>N (nominal)</strong></div>\
+      <div class="bucket" ondrop="drop(event)" ondragover="allow(event)" data-ans="O"><strong>O (ordinal)</strong></div>\
+    </div>\
+    <div id="cards" style="margin-top:2rem;display:flex;gap:1rem;justify-content:center;"></div>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 4 DISCRETE vs CONTINUOUS -->\
+  <section class="slide">\
+    <h2>Discrete vs Continuous</h2>\
+    <p>Can a value sit between neighbours? Yes \uc0\u8594  continuous; no \u8594  discrete.</p>\
+    <div class="choices">\
+      <span class="choice" onclick="checkDC(this,true)">Siblings count</span>\
+      <span class="choice" onclick="checkDC(this,false)">Height 161.3 cm</span>\
+    </div>\
+    <p id="dcTip" style="height:1.5rem;"></p>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 5 BAR vs HISTOGRAM -->\
+  <section class="slide">\
+    <h2>Bar Graph vs Histogram</h2>\
+    <p>Separated bars = categories (bar graph).<br>Touching bars = continuous bins (histogram).</p>\
+    <canvas id="barHist" width="400" height="250"></canvas>\
+    <p>Which graph above is the histogram?</p>\
+    <div class="choices">\
+      <span class="choice" onclick="checkBH(this,1)">Left</span>\
+      <span class="choice" onclick="checkBH(this,2)">Right</span>\
+    </div>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 6 MEAN vs MEDIAN -->\
+  <section class="slide">\
+    <h2>Mean vs Median</h2>\
+    <p>Data: 8, 6, 7, 6, 8. Change 8 \uc0\u8594  28.</p>\
+    <p>Mean becomes <strong>11</strong>, Median stays <strong>7</strong>.</p>\
+    <p>For skewed data, shout which to use:</p>\
+    <div class="choices">\
+      <span class="choice" onclick="checkMM(this,true)">Mean</span>\
+      <span class="choice" onclick="checkMM(this,false)">Median</span>\
+    </div>\
+    <p id="mmTip"></p>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 7 BOX PLOT -->\
+  <section class="slide">\
+    <h2>Box-Plot 5-Number Selfie</h2>\
+    <p>Enter 5 sleep hours (comma separated):</p>\
+    <input id="sleep" placeholder="e.g. 6,7,8,8,9">\
+    <button class="btn" onclick="drawBox()">Draw</button>\
+    <canvas id="boxCan" width="500" height="200"></canvas>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 8 PROBABILITY EVENTS -->\
+  <section class="slide">\
+    <h2>Event Relationships</h2>\
+    <p>Deck: A = spade, B = king. Are they mutually exclusive?</p>\
+    <div class="choices">\
+      <span class="choice" onclick="checkExcl(this,false)">Yes</span>\
+      <span class="choice" onclick="checkExcl(this,true)">No</span>\
+    </div>\
+    <p id="exclTip"></p>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 9 INDEPENDENCE RULE -->\
+  <section class="slide">\
+    <h2>Independence Multiplication Rule</h2>\
+    <p>If independent, P(A and B) = P(A)\'b7P(B)</p>\
+    <p>P(spade)=1/4, P(king)=1/13 \uc0\u8594  joint = ?</p>\
+    <input id="indAns" type="number" step="0.001" placeholder="0.019">\
+    <button class="btn" onclick="checkInd()">Check</button>\
+    <p id="indTip"></p>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 10 WITHOUT REPLACEMENT -->\
+  <section class="slide">\
+    <h2>Dependent Without Replacement</h2>\
+    <p>Jar: 3 red, 2 blue. Pick two reds <strong>without</strong> replacement.</p>\
+    <p>True probability = 3/5 \'d7 2/4 = 0.3</p>\
+    <p>What is the (wrong) independent product?</p>\
+    <input id="depAns" type="number" step="0.01" placeholder="0.36">\
+    <button class="btn" onclick="checkDep()">Check</button>\
+    <p id="depTip"></p>\
+    <button class="btn" onclick="next()">Next \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 11 EXIT TICKET -->\
+  <section class="slide">\
+    <h2>Exit Ticket</h2>\
+    <ol style="text-align:left;font-size:1.2rem;max-width:40ch;">\
+      <li>Commute method data type?</li>\
+      <li>Mean or median for skewed salaries?</li>\
+      <li>Joint probability if independent?</li>\
+      <li>Real-life dependent pair?</li>\
+    </ol>\
+    <p>Write on paper, swap & mark, then tap below.</p>\
+    <button class="btn" onclick="finish()">Finished \uc0\u8594 </button>\
+  </section>\
+\
+  <!-- 12 BADGE -->\
+  <section class="slide">\
+    <h1 class="badge">\uc0\u55356 \u57225  Mastery Unlocked!</h1>\
+    <p>Your score: <span id="finalScore"></span> / 12</p>\
+    <button class="btn" onclick="location.reload()">Play Again</button>\
+  </section>\
+</div>\
+\
+<!-- Navigation -->\
+<div class="arrow left" onclick="prev()">\'8b</div>\
+<div class="arrow right" onclick="next()">\'9b</div>\
+<nav class="dots" id="dots"></nav>\
+\
+<script>\
+/* ====== slide engine ====== */\
+const slides=document.querySelectorAll('.slide');\
+let idx=0,score=0;}
